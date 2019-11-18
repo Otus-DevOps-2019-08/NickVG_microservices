@@ -14,3 +14,4 @@ docker run --rm -ti tehbilly/htop
 docker run --rm --pid host -ti tehbilly/htop
 вывод списка процессов хоста докера. --pid host
 
+
