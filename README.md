@@ -13,11 +13,21 @@ NickVG microservices repository
     загрузил свой образ в Docker Hub
 
 **ДЗ №13**
+	*Сделано:*
+	Развёрнуто приложение состоящие из микросервисов:
+	post-py - сервис отвечающий за написание постов
+	comment - сервис отвечающий за написание комментариев
+	ui - веб-интерфейс, работающий с другими сервисами
+	Скачан образ mongoDB
+	создана сеть для reddit для работы приложения
+
 	При ошибках типа:
-	nick@nick-VirtualBox:~/repo/NickVG_microservices/src$ sudo eval $(docker-machine env docker-host)
-	open /home/nick/.docker/machine/machines/docker-host/config.json: permission denied
+	user@user-VirtualBox:~/repo/microservices/src$ sudo eval $(docker-machine env docker-host)
+	open /home/user/.docker/machine/machines/docker-host/config.json: permission denied
 	sudo: eval: command not found
-	Использовтаь:
+	Использовть:
 	sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
 	sudo chmod g+rwx "/home/$USER/.docker" -R
+
+	Проведена оптимизация Docker файлов
 
