@@ -53,6 +53,9 @@ NickVG microservices repository
 	**docker-machine start docker-host
 	docker-machine start docker-host
 	docker-machine env docker-host**
+	Базовое имя проекта, по-всей видимсоти,	берётся по имени директории, где находится docker-compose.yml.
+	Соответсвенно для именения имени проекта стоит переименовать директорию или же добавить в .env переменную COMPOSE_PROJECT_NAME
 	
+		
 	
 	
