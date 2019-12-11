@@ -28,6 +28,34 @@ NickVG microservices repository
 	Использовть:
 	sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
 	sudo chmod g+rwx "/home/$USER/.docker" -R
-
 	Проведена оптимизация Docker файлов
 
+**ДЗ №14**
+	При ошибке типа 
+	permissions 0670 for '/home/user/.docker/machine/machines/docker-host/id_rsa' are too open
+	Выполнить команду
+	chmod 400 /home/user/.docker/machine/machines/docker-host/id_rsa
+
+	docker run --network host -d nginx
+	Первый раз скачивается докер контейнер и запускается сеть, в следующие разы запускаются сетки.
+	docker kill $(docker ps -q)
+	Остаётся только одна сеть
+	
+	docker run -ti --rm --network host joffotron/docker-net-tools -c ifconfig
+	vs
+	docker-machine ssh docker-host ifconfig
+	вывод комманд практически идентичен, за исключением ipv6. Тип выводимых значений отличается.
+
+	*При роблемах с docker-machine:*
+	**docker-machine inspect docker-host** 
+	и 
+	**docker-machine ip docker-host** - для проверки ip. Если ip не совпадают, то:
+	**docker-machine start docker-host
+	docker-machine start docker-host
+	docker-machine env docker-host**
+	Базовое имя проекта, по-всей видимсоти,	берётся по имени директории, где находится docker-compose.yml.
+	Соответсвенно для именения имени проекта стоит переименовать директорию или же добавить в .env переменную COMPOSE_PROJECT_NAME
+	
+		
+	
+	
