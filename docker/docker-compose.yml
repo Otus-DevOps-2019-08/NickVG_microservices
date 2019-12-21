@@ -12,7 +12,7 @@ services:
           - comment_db
   ui:
     container_name: ui-service
-    image: ${USERNAME}/ui:${IMAGE_VERSION}
+    image: ${USER_NAME}/ui:${IMAGE_VERSION}
     ports:
       - ${PORT}:9292/tcp
     networks:
@@ -21,7 +21,7 @@ services:
           - ui
   post:
     container_name: post-service
-    image: ${USERNAME}/post:${IMAGE_VERSION}
+    image: ${USER_NAME}/post:${IMAGE_VERSION}
     networks:
       back_net:
         aliases:
@@ -31,7 +31,7 @@ services:
           - post
   comment:
     container_name: comment-service
-    image: ${USERNAME}/comment:${IMAGE_VERSION}
+    image: ${USER_NAME}/comment:${IMAGE_VERSION}
     networks:
       back_net:
         aliases:
@@ -40,7 +40,7 @@ services:
         aliases:
         - comment
   prometheus:
-    image: ${USERNAME}/prometheus
+    image: ${USER_NAME}/prometheus
     ports:
       - '9090:9090'
     volumes:
@@ -67,6 +67,20 @@ services:
       back_net:
         aliases:
         - node-exporter
+  mongodb-exporter:
+    image: ${USER_NAME}/mongodb-exporter:latest
+    networks:
+      back_net:
+        aliases:
+          - mongodb-exporter
+    environment:
+      MONGODB_URI: "mongodb://mongodb-service:27017"
+  cloudprober:
+    image: ${USER_NAME}/cloudprober:latest
+    networks:
+      back_net:
+        aliases:
+        - cloudprober-exporter 
 
 volumes:
   post_db:
