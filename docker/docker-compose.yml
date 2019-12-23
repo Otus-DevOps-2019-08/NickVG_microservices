@@ -1,0 +1,92 @@
+version: '3.3'
+services:
+  post_db:
+    image: mongo:${MONGO_VERSION}
+    container_name: mongodb-service
+    volumes:
+      - post_db:/data/db
+    networks:
+      back_net:
+        aliases:
+          - post_db
+          - comment_db
+  ui:
+    container_name: ui-service
+    image: ${USER_NAME}/ui:${IMAGE_VERSION}
+    ports:
+      - ${PORT}:9292/tcp
+    networks:
+      front_net:
+        aliases:
+          - ui
+  post:
+    container_name: post-service
+    image: ${USER_NAME}/post:${IMAGE_VERSION}
+    networks:
+      back_net:
+        aliases:
+          - post
+      front_net:
+        aliases:
+          - post
+  comment:
+    container_name: comment-service
+    image: ${USER_NAME}/comment:${IMAGE_VERSION}
+    networks:
+      back_net:
+        aliases:
+        - comment
+      front_net:
+        aliases:
+        - comment
+  prometheus:
+    image: ${USER_NAME}/prometheus
+    ports:
+      - '9090:9090'
+    volumes:
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=1d'
+    networks:
+      - front_net
+      - back_net
+  node-exporter:
+    image: prom/node-exporter:v0.15.2
+    user: root
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+    networks:
+      back_net:
+        aliases:
+        - node-exporter
+  mongodb-exporter:
+    image: ${USER_NAME}/mongodb-exporter:latest
+    networks:
+      back_net:
+        aliases:
+          - mongodb-exporter
+    environment:
+      MONGODB_URI: "mongodb://mongodb-service:27017"
+  cloudprober:
+    image: ${USER_NAME}/cloudprober:latest
+    networks:
+      back_net:
+        aliases:
+        - cloudprober-exporter 
+
+volumes:
+  post_db:
+  prometheus_data:
+
+networks:
+  back_net:
+  front_net:
+
