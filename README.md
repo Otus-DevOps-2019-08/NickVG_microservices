@@ -77,5 +77,3 @@ NickVG microservices repository
 	В сборку добавлен alert manager
 	Новые образы отправлены в докер-хаб
 
-
-
