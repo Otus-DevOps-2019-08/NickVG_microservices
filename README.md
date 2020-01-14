@@ -85,4 +85,7 @@ NickVG microservices repository
 	Реализован парсинг логов с использованием регулярных выражений
 	Реализована распределённая трассировка с использованием Zipkin
 	Причиной медленной работы сломанного кода является это post.db_find_single_post - поиск поста в БД происходит слишком медленно
+** ДЗ №19**
+	Пройден Kubernetes The Hard Way
+	Проверено, что Проверить, что kubectl apply -f <filename> проходит по созданным до этого deployment-ам (ui, post, mongo, comment) и поды (kubectl get pods --all-namespaces) запускаются.
 
