@@ -76,6 +76,7 @@ NickVG microservices repository
 	В сборку добавлена графана и дашборды для неё
 	В сборку добавлен alert manager
 	Новые образы отправлены в докер-хаб
+
 **ДЗ №18**
 
 	Подняты сервмсы Elasticsearch и Kibana
@@ -85,7 +86,31 @@ NickVG microservices repository
 	Реализован парсинг логов с использованием регулярных выражений
 	Реализована распределённая трассировка с использованием Zipkin
 	Причиной медленной работы сломанного кода является это post.db_find_single_post - поиск поста в БД происходит слишком медленно
+
 ** ДЗ №19**
+
 	Пройден Kubernetes The Hard Way
 	Проверено, что Проверить, что kubectl apply -f <filename> проходит по созданным до этого deployment-ам (ui, post, mongo, comment) и поды (kubectl get pods --all-namespaces) запускаются.
+
+** ДЗ №20**
+
+	Развернуто локальное окружение для работы с Kubernetes
+	Развёрнут Kubernetes в GKE
+	Reddit запущен в GCP по адресу http://35.226.76.130:31615/
+	ну и последнее, слайд 81
+	линк
+	http://localhost:8001/ui
+	гугл его упразднил
+	Dashboard is not a built-in application. It is an external UI for kubernetes that might or might not be installed.
+	теперь надо заходить через
+	http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+
+	Если вы используете инструментальную панель версии v1.10.1 или новее, вы также должны добавить --enable-skip-login к аргументам командной строки развертывания. Вы можете сделать это, добавив его к args в kubectl edit deployment/kubernetes-dashboard --namespace=kube-system.
+
+	Пример:
+      	containers:
+      	- args:
+          - --auto-generate-certificates
+          - --enable-skip-login            # <-- add this line
+          image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1
 
